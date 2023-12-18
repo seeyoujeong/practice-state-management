@@ -5,8 +5,7 @@ import PokeCard from "./PokeCard";
 
 const LIMIT = 10;
 
-const PokeList = () => {
-  const [pokemons, setPokemons] = useState([]);
+const PokeList = ({ pokemons, setPokemons }) => {
   const [offset, setOffset] = useState(0);
   const url = `${BASE_URL}pokemon/?limit=${LIMIT}&offset=${offset}`;
 
@@ -22,7 +21,7 @@ const PokeList = () => {
     } catch (error) {
       console.error(error);
     }
-  }, [offset, url]);
+  }, [offset, setPokemons, url]);
 
   useEffect(() => {
     fetchPokeData();
