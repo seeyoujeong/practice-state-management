@@ -1,32 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
-import { BASE_URL } from "../constants/url";
-import axios from "axios";
 import PokeCard from "./PokeCard";
+import { LIMIT } from "../constants/api";
 
-const LIMIT = 10;
-
-const PokeList = ({ pokemons, setPokemons }) => {
-  const [offset, setOffset] = useState(0);
-  const url = `${BASE_URL}pokemon/?limit=${LIMIT}&offset=${offset}`;
-
-  const fetchPokeData = useCallback(async () => {
-    try {
-      const {
-        data: { results },
-      } = await axios.get(url);
-
-      setPokemons((prevData) =>
-        offset === 0 ? results : [...prevData, ...results]
-      );
-    } catch (error) {
-      console.error(error);
-    }
-  }, [offset, setPokemons, url]);
-
-  useEffect(() => {
-    fetchPokeData();
-  }, [fetchPokeData]);
-
+const PokeList = ({ pokemons, setOffset }) => {
   return (
     <>
       <section className="flex flex-col justify-center items-center pt-6 overflow-auto z-0">
@@ -44,7 +19,7 @@ const PokeList = ({ pokemons, setPokemons }) => {
       </section>
       <div className="text-center">
         <button
-          onClick={() => setOffset(offset + LIMIT)}
+          onClick={() => setOffset((prev) => prev + LIMIT)}
           className="bg-slate-800 px-6 py-2 my-4 text-base rounded-lg font-bold text-white"
         >
           더 보기

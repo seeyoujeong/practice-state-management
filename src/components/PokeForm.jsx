@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { BASE_URL } from "../constants/url";
 
-const PokeForm = ({ setPokemons }) => {
+const PokeForm = ({ setPokemons, fetchPokeData }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearchInput = async (event) => {
@@ -23,7 +23,7 @@ const PokeForm = ({ setPokemons }) => {
         console.error(error);
       }
     } else {
-      // fetchPokeData();
+      fetchPokeData();
     }
   };
 
