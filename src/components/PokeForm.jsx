@@ -1,31 +1,37 @@
 import axios from "axios";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { BASE_URL } from "../constants/url";
+import useDebounce from "../hooks/useDebounce";
 
 const PokeForm = ({ setPokemons, fetchPokeData }) => {
   const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const handleSearchInput = async (event) => {
-    const targetValue = event.target.value;
-    setSearchTerm(targetValue);
+  const handleSearchInput = useCallback(
+    async (targetValue) => {
+      if (targetValue.length > 0) {
+        try {
+          const res = await axios.get(`${BASE_URL}pokemon/${targetValue}`);
+          const pokemonData = {
+            url: `${BASE_URL}pokemon/${res.data.id}`,
+            name: searchTerm,
+          };
 
-    if (targetValue.length > 0) {
-      try {
-        const res = await axios.get(`${BASE_URL}pokemon/${targetValue}`);
-        const pokemonData = {
-          url: `${BASE_URL}pokemon/${res.data.id}`,
-          name: searchTerm,
-        };
-
-        setPokemons([pokemonData]);
-      } catch (error) {
-        setPokemons([]);
-        console.error(error);
+          setPokemons([pokemonData]);
+        } catch (error) {
+          setPokemons([]);
+          console.error(error);
+        }
+      } else {
+        fetchPokeData();
       }
-    } else {
-      fetchPokeData();
-    }
-  };
+    },
+    [fetchPokeData, searchTerm, setPokemons]
+  );
+
+  useEffect(() => {
+    handleSearchInput(debouncedSearchTerm);
+  }, [debouncedSearchTerm, handleSearchInput]);
 
   return (
     <div className="z-50">
@@ -33,7 +39,7 @@ const PokeForm = ({ setPokemons, fetchPokeData }) => {
         <input
           type="text"
           value={searchTerm}
-          onChange={handleSearchInput}
+          onChange={(event) => setSearchTerm(event.target.value)}
           className="w-[20.5rem] h-6 px-2 py-1 bg-[hsl(214,13%,47%)] rounded-lg text-xs text-gray-300 text-center"
         />
         <button
