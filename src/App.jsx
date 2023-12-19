@@ -16,9 +16,15 @@ const App = () => {
         data: { results },
       } = await axios.get(url);
 
-      setPokemons((prevData) =>
-        offset === 0 ? results : [...prevData, ...results]
-      );
+      setPokemons((prevData) => {
+        if (offset === 0) {
+          return results;
+        } else if (prevData.map(({ url }) => url).includes(results[0].url)) {
+          return prevData;
+        } else {
+          return [...prevData, ...results];
+        }
+      });
     } catch (error) {
       console.error(error);
     }
