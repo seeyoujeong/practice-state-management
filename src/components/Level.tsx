@@ -1,9 +1,13 @@
+import { LevelContext } from "@/context";
 import styled from "@emotion/styled";
+import { useContext } from "react";
 
 function Level() {
+  const { level } = useContext(LevelContext);
+
   return (
     <Container>
-      <NumberBox>1</NumberBox>
+      <NumberBox>{level}</NumberBox>
     </Container>
   );
 }
