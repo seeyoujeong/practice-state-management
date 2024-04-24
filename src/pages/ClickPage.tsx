@@ -1,12 +1,12 @@
-import { LevelContext } from "@/context";
+import { increment } from "@/context";
+import { useAppDispatch } from "@/context/hooks";
 import styled from "@emotion/styled";
-import { useContext } from "react";
 
 function ClickPage() {
-  const { setLevel } = useContext(LevelContext);
+  const dispatch = useAppDispatch();
 
   const handleClick = () => {
-    setLevel((prev) => prev + 1);
+    dispatch(increment());
   };
 
   return (

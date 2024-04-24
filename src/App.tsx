@@ -1,26 +1,16 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "@/components";
 import styled from "@emotion/styled";
-import { useMemo, useState } from "react";
-import { LevelContext } from "./context";
+import { Provider } from "react-redux";
+import { store } from "./context/store";
 
 function App() {
-  const [level, setLevel] = useState(1);
-
-  const contextValue = useMemo(
-    () => ({
-      level,
-      setLevel,
-    }),
-    [level, setLevel]
-  );
-
   return (
     <Container>
-      <LevelContext.Provider value={contextValue}>
+      <Provider store={store}>
         <Header />
         <Outlet />
-      </LevelContext.Provider>
+      </Provider>
     </Container>
   );
 }

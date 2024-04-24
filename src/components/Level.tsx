@@ -1,9 +1,8 @@
-import { LevelContext } from "@/context";
+import { useAppSelector } from "@/context/hooks";
 import styled from "@emotion/styled";
-import { useContext } from "react";
 
 function Level() {
-  const { level } = useContext(LevelContext);
+  const level = useAppSelector((state) => state.level.value);
 
   return (
     <Container>
