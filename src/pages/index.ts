@@ -1,2 +1,1 @@
-export { default as ClickPage } from "./ClickPage";
-export { default as NumberPage } from "./NumberPage";
+export { default as SearchPage } from "./SearchPage";

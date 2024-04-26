@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import App from "./App.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ClickPage, NumberPage } from "@/pages";
+import App from "./App.tsx";
+import { SearchPage } from "@/pages";
 import "@/main.css";
 
 const router = createBrowserRouter([
@@ -11,12 +11,8 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "click",
-        element: <ClickPage />,
-      },
-      {
-        path: "number",
-        element: <NumberPage />,
+        path: "search",
+        element: <SearchPage />,
       },
     ],
   },

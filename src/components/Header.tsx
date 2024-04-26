@@ -9,8 +9,7 @@ function Header() {
     <Container>
       <Title>Header</Title>
       <Menu>
-        <MenuItem onClick={() => navigate("/click")}>click</MenuItem>
-        <MenuItem onClick={() => navigate("/number")}>number</MenuItem>
+        <MenuItem onClick={() => navigate("/search")}>search</MenuItem>
       </Menu>
       <Level />
     </Container>
@@ -26,6 +25,7 @@ const Container = styled.div`
   display: flex;
   background-color: white;
   border-bottom: 1px solid gray;
+  box-sizing: border-box;
 `;
 
 const Title = styled.div`
