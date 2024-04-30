@@ -9,6 +9,7 @@ function Header() {
       <Title onClick={() => navigate("/")}>Header</Title>
       <Menu>
         <MenuItem onClick={() => navigate("/search")}>search</MenuItem>
+        <MenuItem onClick={() => navigate("/shop")}>shop</MenuItem>
       </Menu>
     </Container>
   );
