@@ -9,6 +9,7 @@ export default function SearchBar() {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
+    if (keyword.trim().length === 0) return;
 
     const date = getCurrentDate();
 
