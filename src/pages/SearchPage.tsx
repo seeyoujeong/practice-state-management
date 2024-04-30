@@ -2,6 +2,16 @@ import { SearchContext } from "@/context";
 import styled from "@emotion/styled";
 import { FormEventHandler, useContext, useState } from "react";
 
+const getMonthAndDate = (ISOTime: string) => {
+  const [yearMonthDate] = ISOTime.split("T");
+  const [, month, date] = yearMonthDate.split("-");
+
+  return {
+    month,
+    date,
+  };
+};
+
 export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
   const { searchedList, setSearchedList } = useContext(SearchContext);
@@ -24,11 +34,18 @@ export default function SearchPage() {
         />
         <button>검색</button>
       </form>
-      <ul>
-        {searchedList.map(({ keyword, date }) => (
-          <li key={date}>{keyword}</li>
-        ))}
-      </ul>
+      <SearchedListWrapper>
+        <SearchedList>
+          {searchedList.map(({ keyword, date }) => (
+            <Searched key={date}>
+              <span>{keyword}</span>
+              <span>{`${getMonthAndDate(date).month}.${
+                getMonthAndDate(date).date
+              }`}</span>
+            </Searched>
+          ))}
+        </SearchedList>
+      </SearchedListWrapper>
     </Container>
   );
 }
@@ -38,4 +55,20 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const SearchedListWrapper = styled.div`
+  padding-top: 10px;
+`;
+
+const SearchedList = styled.ul`
+  list-style: none;
+  margin: 0;
+  padding: 0;
+`;
+
+const Searched = styled.li`
+  width: 200px;
+  display: flex;
+  justify-content: space-between;
 `;
