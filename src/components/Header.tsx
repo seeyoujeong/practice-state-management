@@ -7,7 +7,7 @@ function Header() {
 
   return (
     <Container>
-      <Title>Header</Title>
+      <Title onClick={() => navigate("/")}>Header</Title>
       <Menu>
         <MenuItem onClick={() => navigate("/search")}>search</MenuItem>
       </Menu>
@@ -33,6 +33,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 `;
 
 const Menu = styled.ul`

@@ -2,10 +2,11 @@ import { Outlet } from "react-router-dom";
 import { Header } from "@/components";
 import styled from "@emotion/styled";
 import { useMemo, useState } from "react";
-import { LevelContext } from "./context";
+import { LevelContext, SearchContext, Searched } from "@/context";
 
 function App() {
   const [level, setLevel] = useState(1);
+  const [searchedList, setSearchedList] = useState<Searched[]>([]);
 
   const contextValue = useMemo(
     () => ({
@@ -15,11 +16,21 @@ function App() {
     [level, setLevel]
   );
 
+  const searchContextValue = useMemo(
+    () => ({
+      searchedList,
+      setSearchedList,
+    }),
+    [searchedList, setSearchedList]
+  );
+
   return (
     <Container>
       <LevelContext.Provider value={contextValue}>
-        <Header />
-        <Outlet />
+        <SearchContext.Provider value={searchContextValue}>
+          <Header />
+          <Outlet />
+        </SearchContext.Provider>
       </LevelContext.Provider>
     </Container>
   );

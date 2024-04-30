@@ -1,13 +1,17 @@
+import { SearchContext } from "@/context";
 import styled from "@emotion/styled";
-import { FormEventHandler, useState } from "react";
+import { FormEventHandler, useContext, useState } from "react";
 
 export default function SearchPage() {
-  const [inputValue, setInputValue] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const { searchedList, setSearchedList } = useContext(SearchContext);
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log(inputValue);
-    setInputValue("");
+    const offset = new Date().getTimezoneOffset() * 60 * 1000;
+    const currentDate = new Date(Date.now() - offset).toISOString();
+    setSearchedList([...searchedList, { keyword, date: currentDate }]);
+    setKeyword("");
   };
 
   return (
@@ -15,11 +19,16 @@ export default function SearchPage() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          onChange={(e) => setInputValue(e.target.value)}
-          value={inputValue}
+          onChange={(e) => setKeyword(e.target.value)}
+          value={keyword}
         />
         <button>검색</button>
       </form>
+      <ul>
+        {searchedList.map(({ keyword, date }) => (
+          <li key={date}>{keyword}</li>
+        ))}
+      </ul>
     </Container>
   );
 }
@@ -27,5 +36,6 @@ export default function SearchPage() {
 const Container = styled.div`
   height: calc(100% - 50px);
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 `;
