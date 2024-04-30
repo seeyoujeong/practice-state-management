@@ -1,16 +1,7 @@
 import { SearchContext } from "@/context";
+import { getCurrentDate, getMonthAndDate } from "@/utils";
 import styled from "@emotion/styled";
 import { FormEventHandler, useContext, useState } from "react";
-
-const getMonthAndDate = (ISOTime: string) => {
-  const [yearMonthDate] = ISOTime.split("T");
-  const [, month, date] = yearMonthDate.split("-");
-
-  return {
-    month,
-    date,
-  };
-};
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState("");
@@ -18,9 +9,10 @@ export default function SearchPage() {
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    const offset = new Date().getTimezoneOffset() * 60 * 1000;
-    const currentDate = new Date(Date.now() - offset).toISOString();
-    setSearchedList([...searchedList, { keyword, date: currentDate }]);
+
+    const date = getCurrentDate();
+
+    setSearchedList([...searchedList, { keyword, date }]);
     setKeyword("");
   };
 
