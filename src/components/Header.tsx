@@ -1,5 +1,4 @@
 import styled from "@emotion/styled";
-import Level from "./Level";
 import { useNavigate } from "react-router-dom";
 
 function Header() {
@@ -11,7 +10,6 @@ function Header() {
       <Menu>
         <MenuItem onClick={() => navigate("/search")}>search</MenuItem>
       </Menu>
-      <Level />
     </Container>
   );
 }
