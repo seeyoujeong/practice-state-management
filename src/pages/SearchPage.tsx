@@ -1,31 +1,15 @@
+import { SearchBar } from "@/components";
 import { SearchContext } from "@/context";
-import { getCurrentDate, getMonthAndDate } from "@/utils";
+import { getMonthAndDate } from "@/utils";
 import styled from "@emotion/styled";
-import { FormEventHandler, useContext, useState } from "react";
+import { useContext } from "react";
 
 export default function SearchPage() {
-  const [keyword, setKeyword] = useState("");
-  const { searchedList, setSearchedList } = useContext(SearchContext);
-
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-
-    const date = getCurrentDate();
-
-    setSearchedList([...searchedList, { keyword, date }]);
-    setKeyword("");
-  };
+  const { searchedList } = useContext(SearchContext);
 
   return (
     <Container>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setKeyword(e.target.value)}
-          value={keyword}
-        />
-        <button>검색</button>
-      </form>
+      <SearchBar />
       <SearchedListWrapper>
         <SearchedList>
           {searchedList.map(({ keyword, date }) => (
