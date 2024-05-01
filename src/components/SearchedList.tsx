@@ -25,7 +25,7 @@ export default function SearchedList({ isFocus }: SearchedList) {
       <List>
         {searchedList.map(({ keyword, date }) => (
           <Item key={date}>
-            <span>{keyword}</span>
+            <KeywordBox>{keyword}</KeywordBox>
             <DateAndButtonArea>
               <DateBox>{`${getMonthAndDate(date).month}.${
                 getMonthAndDate(date).date
@@ -44,7 +44,7 @@ export default function SearchedList({ isFocus }: SearchedList) {
 const Container = styled.div<{ isDisplay: boolean }>`
   width: 500px;
   display: ${({ isDisplay }) => (isDisplay ? "block" : "none")};
-  padding: 10px 10px;
+  padding: 10px 0;
   box-sizing: border-box;
   border: 1px solid black;
   border-top: 0px;
@@ -56,7 +56,6 @@ const List = styled.ul`
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
 `;
 
 const Item = styled.li`
@@ -64,6 +63,20 @@ const Item = styled.li`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
+  padding: 10px;
+  gap: 5px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+`;
+
+const KeywordBox = styled.span`
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 `;
 
 const DateAndButtonArea = styled.div`
