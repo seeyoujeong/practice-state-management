@@ -17,13 +17,24 @@ export default function SearchBar({ setIsFocus }: SearchBarProps) {
   const [keyword, setKeyword] = useState("");
   const { searchedList, setSearchedList } = useContext(SearchContext);
 
-  const handleSubmit: FormEventHandler = (e) => {
-    e.preventDefault();
-    if (keyword.trim().length === 0) return;
+  const handleSubmit: FormEventHandler = (event) => {
+    event.preventDefault();
+    const currentKeyword = keyword.trim();
+
+    if (currentKeyword.length === 0) return;
 
     const date = getCurrentDate();
 
-    setSearchedList([...searchedList, { keyword, date }]);
+    if (searchedList.find(({ keyword }) => keyword === currentKeyword)) {
+      const removedList = searchedList.filter(
+        ({ keyword }) => keyword !== currentKeyword
+      );
+
+      setSearchedList([{ keyword: currentKeyword, date }, ...removedList]);
+    } else {
+      setSearchedList([{ keyword: currentKeyword, date }, ...searchedList]);
+    }
+
     setKeyword("");
   };
 
@@ -32,7 +43,7 @@ export default function SearchBar({ setIsFocus }: SearchBarProps) {
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
-          onChange={(e) => setKeyword(e.target.value)}
+          onChange={(event) => setKeyword(event.target.value)}
           value={keyword}
           onFocus={() => setIsFocus(true)}
         />
