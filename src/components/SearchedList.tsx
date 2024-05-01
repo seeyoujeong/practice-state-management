@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { MouseEvent, useContext } from "react";
 import { SearchContext } from "@/context";
 import { getMonthAndDate } from "@/utils";
 import styled from "@emotion/styled";
@@ -8,7 +8,17 @@ interface SearchedList {
 }
 
 export default function SearchedList({ isFocus }: SearchedList) {
-  const { searchedList } = useContext(SearchContext);
+  const { searchedList, setSearchedList } = useContext(SearchContext);
+
+  const handleClick = (event: MouseEvent, clickedKeyword: string) => {
+    event.stopPropagation();
+
+    const removedList = searchedList.filter(
+      ({ keyword }) => keyword !== clickedKeyword
+    );
+
+    setSearchedList(removedList);
+  };
 
   return (
     <Container isDisplay={isFocus && searchedList.length > 0}>
@@ -20,7 +30,9 @@ export default function SearchedList({ isFocus }: SearchedList) {
               <DateBox>{`${getMonthAndDate(date).month}.${
                 getMonthAndDate(date).date
               }`}</DateBox>
-              <ButtonBox>x</ButtonBox>
+              <ButtonBox onClick={(event) => handleClick(event, keyword)}>
+                x
+              </ButtonBox>
             </DateAndButtonArea>
           </Item>
         ))}
