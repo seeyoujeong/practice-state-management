@@ -1,9 +1,19 @@
 import { SearchContext } from "@/context";
 import { getCurrentDate } from "@/utils";
 import styled from "@emotion/styled";
-import { FormEventHandler, useContext, useState } from "react";
+import {
+  Dispatch,
+  FormEventHandler,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 
-export default function SearchBar() {
+interface SearchBarProps {
+  setIsFocus: Dispatch<SetStateAction<boolean>>;
+}
+
+export default function SearchBar({ setIsFocus }: SearchBarProps) {
   const [keyword, setKeyword] = useState("");
   const { searchedList, setSearchedList } = useContext(SearchContext);
 
@@ -24,6 +34,7 @@ export default function SearchBar() {
           type="text"
           onChange={(e) => setKeyword(e.target.value)}
           value={keyword}
+          onFocus={() => setIsFocus(true)}
         />
         <Button>검색</Button>
       </Form>

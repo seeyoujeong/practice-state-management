@@ -3,11 +3,15 @@ import { SearchContext } from "@/context";
 import { getMonthAndDate } from "@/utils";
 import styled from "@emotion/styled";
 
-export default function SearchedList() {
+interface SearchedList {
+  isFocus: boolean;
+}
+
+export default function SearchedList({ isFocus }: SearchedList) {
   const { searchedList } = useContext(SearchContext);
 
   return (
-    <Container isDisplay={searchedList.length > 0}>
+    <Container isDisplay={isFocus && searchedList.length > 0}>
       <List>
         {searchedList.map(({ keyword, date }) => (
           <Item key={date}>
