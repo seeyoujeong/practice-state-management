@@ -7,7 +7,7 @@ export default function SearchedList() {
   const { searchedList } = useContext(SearchContext);
 
   return (
-    <Container>
+    <Container isDisplay={searchedList.length > 0}>
       <List>
         {searchedList.map(({ keyword, date }) => (
           <Item key={date}>
@@ -25,10 +25,11 @@ export default function SearchedList() {
   );
 }
 
-const Container = styled.div`
+const Container = styled.div<{ isDisplay: boolean }>`
   width: 500px;
-  box-sizing: border-box;
+  display: ${({ isDisplay }) => (isDisplay ? "block" : "none")};
   padding: 10px 10px;
+  box-sizing: border-box;
   border: 1px solid black;
   border-top: 0px;
 `;
@@ -46,6 +47,7 @@ const Item = styled.li`
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 `;
 
 const DateAndButtonArea = styled.div`
