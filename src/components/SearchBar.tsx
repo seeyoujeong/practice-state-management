@@ -40,6 +40,7 @@ const Form = styled.form`
   height: 50px;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
   border: 1px solid black;
 `;
 
