@@ -1,28 +1,13 @@
 import { SearchBar, SearchedList } from "@/components";
+import { useFocusState } from "@/hooks";
 import styled from "@emotion/styled";
-import { useEffect, useRef, useState } from "react";
 
 export default function SearchPage() {
-  const [isFocus, setIsFocus] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const handlOutsideClick = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsFocus(false);
-      }
-    };
-
-    document.addEventListener("click", handlOutsideClick);
-
-    return () => {
-      document.removeEventListener("click", handlOutsideClick);
-    };
-  }, []);
+  const { elementRef, isFocus, setIsFocus } = useFocusState<HTMLDivElement>();
 
   return (
     <Container>
-      <div ref={ref}>
+      <div ref={elementRef}>
         <SearchBar setIsFocus={setIsFocus} />
         <SearchedList isFocus={isFocus} />
       </div>
