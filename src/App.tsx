@@ -1,26 +1,15 @@
 import { Outlet } from "react-router-dom";
 import { Header } from "@/components";
 import styled from "@emotion/styled";
-import { useMemo, useState } from "react";
-import { SearchContext, Searched } from "@/context";
+import { SearchProvider } from "@/context";
 
 function App() {
-  const [searchedList, setSearchedList] = useState<Searched[]>([]);
-
-  const searchContextValue = useMemo(
-    () => ({
-      searchedList,
-      setSearchedList,
-    }),
-    [searchedList, setSearchedList]
-  );
-
   return (
     <Container>
-      <SearchContext.Provider value={searchContextValue}>
+      <SearchProvider>
         <Header />
         <Outlet />
-      </SearchContext.Provider>
+      </SearchProvider>
     </Container>
   );
 }
