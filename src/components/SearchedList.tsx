@@ -10,7 +10,15 @@ interface SearchedList {
 export default function SearchedList({ isFocus }: SearchedList) {
   const { searchedList, setSearchedList } = useContext(SearchContext);
 
-  const handleClick = (event: MouseEvent, clickedKeyword: string) => {
+  const handleDeleteAllClick = (event: MouseEvent) => {
+    event.stopPropagation();
+
+    if (confirm("최근검색어를 모두 삭제하시겠습니까?")) {
+      setSearchedList([]);
+    }
+  };
+
+  const handleDeleteClick = (event: MouseEvent, clickedKeyword: string) => {
     event.stopPropagation();
 
     const removedList = searchedList.filter(
@@ -22,6 +30,12 @@ export default function SearchedList({ isFocus }: SearchedList) {
 
   return (
     <Container isDisplay={isFocus && searchedList.length > 0}>
+      <ListHeader>
+        <span>최근 검색어</span>
+        <DeleteAllButton onClick={(event) => handleDeleteAllClick(event)}>
+          전체 삭제
+        </DeleteAllButton>
+      </ListHeader>
       <List>
         {searchedList.map(({ keyword, date }) => (
           <Item key={date}>
@@ -30,9 +44,11 @@ export default function SearchedList({ isFocus }: SearchedList) {
               <DateBox>{`${getMonthAndDate(date).month}.${
                 getMonthAndDate(date).date
               }`}</DateBox>
-              <ButtonBox onClick={(event) => handleClick(event, keyword)}>
+              <DeleteButton
+                onClick={(event) => handleDeleteClick(event, keyword)}
+              >
                 x
-              </ButtonBox>
+              </DeleteButton>
             </DateAndButtonArea>
           </Item>
         ))}
@@ -48,6 +64,20 @@ const Container = styled.div<{ isDisplay: boolean }>`
   box-sizing: border-box;
   border: 1px solid black;
   border-top: 0px;
+`;
+
+const ListHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  font-size: 14px;
+`;
+
+const DeleteAllButton = styled.button`
+  height: 20px;
+  border: 0px;
+  cursor: pointer;
 `;
 
 const List = styled.ul`
@@ -89,7 +119,7 @@ const DateBox = styled.span`
   margin-top: 5px;
 `;
 
-const ButtonBox = styled.button`
+const DeleteButton = styled.button`
   border: 0px;
   cursor: pointer;
 `;
