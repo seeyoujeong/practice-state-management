@@ -1,15 +1,26 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
+  const menuList = ["search", "shop"];
+  const isCurrentPathname = (pathname: string) =>
+    location.pathname === `/${pathname}`;
 
   return (
     <Container>
       <Title onClick={() => navigate("/")}>Header</Title>
       <Menu>
-        <MenuItem onClick={() => navigate("/search")}>search</MenuItem>
-        <MenuItem onClick={() => navigate("/shop")}>shop</MenuItem>
+        {menuList.map((name) => (
+          <MenuItem
+            key={name}
+            isCurrentPathname={isCurrentPathname(name)}
+            onClick={() => navigate(name)}
+          >
+            {name}
+          </MenuItem>
+        ))}
       </Menu>
     </Container>
   );
@@ -44,12 +55,13 @@ const Menu = styled.ul`
   margin: 0;
 `;
 
-const MenuItem = styled.li`
+const MenuItem = styled.li<{ isCurrentPathname: boolean }>`
   width: 50px;
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(0, 0, 0, 0.6);
+  color: ${(props) =>
+    props.isCurrentPathname ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0.6)"};
   cursor: pointer;
 
   &:hover {
