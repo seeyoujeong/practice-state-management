@@ -1,7 +1,7 @@
 import { MouseEvent, useContext } from "react";
 import { SearchContext } from "@/context";
-import { getMonthAndDate } from "@/utils";
 import styled from "@emotion/styled";
+import SearchedItem from "./SearchedItem";
 
 interface SearchedList {
   isFocus: boolean;
@@ -38,19 +38,12 @@ export default function SearchedList({ isFocus }: SearchedList) {
       </ListHeader>
       <List>
         {searchedList.map(({ keyword, date }) => (
-          <Item key={date}>
-            <KeywordBox>{keyword}</KeywordBox>
-            <DateAndButtonArea>
-              <DateBox>{`${getMonthAndDate(date).month}.${
-                getMonthAndDate(date).date
-              }`}</DateBox>
-              <DeleteButton
-                onClick={(event) => handleDeleteClick(event, keyword)}
-              >
-                x
-              </DeleteButton>
-            </DateAndButtonArea>
-          </Item>
+          <SearchedItem
+            key={date}
+            keyword={keyword}
+            date={date}
+            onDeleteClick={handleDeleteClick}
+          />
         ))}
       </List>
     </Container>
@@ -86,40 +79,4 @@ const List = styled.ul`
   padding: 0;
   display: flex;
   flex-direction: column;
-`;
-
-const Item = styled.li`
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 10px;
-  gap: 5px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-  }
-`;
-
-const KeywordBox = styled.span`
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-`;
-
-const DateAndButtonArea = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-`;
-
-const DateBox = styled.span`
-  margin-top: 5px;
-`;
-
-const DeleteButton = styled.button`
-  border: 0px;
-  cursor: pointer;
 `;
