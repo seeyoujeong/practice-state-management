@@ -1,6 +1,3 @@
-import { SearchContext } from "@/context";
-import { getCurrentDate } from "@/utils";
-import styled from "@emotion/styled";
 import {
   Dispatch,
   FormEventHandler,
@@ -8,6 +5,9 @@ import {
   useContext,
   useState,
 } from "react";
+import styled from "@emotion/styled";
+import { SearchContext } from "@/context";
+import { getCurrentDate } from "@/utils";
 
 interface SearchBarProps {
   setIsFocus: Dispatch<SetStateAction<boolean>>;

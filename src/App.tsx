@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
-import { Header } from "@/components";
 import styled from "@emotion/styled";
+import { Header } from "@/components";
 import { SearchProvider } from "@/context";
 
 function App() {

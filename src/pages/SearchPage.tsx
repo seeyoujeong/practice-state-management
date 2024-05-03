@@ -1,6 +1,6 @@
+import styled from "@emotion/styled";
 import { SearchBar, SearchedList } from "@/components";
 import { useFocusState } from "@/hooks";
-import styled from "@emotion/styled";
 
 export default function SearchPage() {
   const { elementRef, isFocus, setIsFocus } = useFocusState<HTMLDivElement>();

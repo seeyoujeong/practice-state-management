@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
-import { createRoot } from "react-dom/client";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import { createRoot } from "react-dom/client";
 import { SearchPage, ShopPage } from "@/pages";
 import App from "./App.tsx";
 import "@/main.css";

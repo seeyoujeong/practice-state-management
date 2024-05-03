@@ -1,6 +1,6 @@
 import { MouseEvent, useContext } from "react";
-import { SearchContext } from "@/context";
 import styled from "@emotion/styled";
+import { SearchContext } from "@/context";
 import SearchedItem from "./SearchedItem";
 
 interface SearchedList {
