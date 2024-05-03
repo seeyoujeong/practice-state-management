@@ -1,11 +1,10 @@
-import { MouseEvent } from "react";
 import styled from "@emotion/styled";
 import { getMonthAndDate } from "@/utils";
 
 interface SearchedItemProps {
   keyword: string;
   date: string;
-  onDeleteClick: (event: MouseEvent, clickedKeyword: string) => void;
+  onDeleteClick: (event: React.MouseEvent, clickedKeyword: string) => void;
 }
 
 export default function SearchedItem({

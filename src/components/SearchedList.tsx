@@ -1,4 +1,4 @@
-import { MouseEvent, useContext } from "react";
+import { useContext } from "react";
 import styled from "@emotion/styled";
 import { SearchContext } from "@/context";
 import SearchedItem from "./SearchedItem";
@@ -10,7 +10,7 @@ interface SearchedList {
 export default function SearchedList({ isFocus }: SearchedList) {
   const { searchedList, setSearchedList } = useContext(SearchContext);
 
-  const handleDeleteAllClick = (event: MouseEvent) => {
+  const handleDeleteAllClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     if (confirm("최근검색어를 모두 삭제하시겠습니까?")) {
@@ -18,7 +18,10 @@ export default function SearchedList({ isFocus }: SearchedList) {
     }
   };
 
-  const handleDeleteClick = (event: MouseEvent, clickedKeyword: string) => {
+  const handleDeleteClick = (
+    event: React.MouseEvent,
+    clickedKeyword: string
+  ) => {
     event.stopPropagation();
 
     const removedList = searchedList.filter(

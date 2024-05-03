@@ -1,11 +1,4 @@
-import {
-  Dispatch,
-  ReactNode,
-  SetStateAction,
-  createContext,
-  useMemo,
-  useState,
-} from "react";
+import { createContext, useMemo, useState } from "react";
 
 export interface Searched {
   keyword: string;
@@ -14,7 +7,7 @@ export interface Searched {
 
 interface SearchContextType {
   searchedList: Searched[];
-  setSearchedList: Dispatch<SetStateAction<Searched[]>>;
+  setSearchedList: React.Dispatch<React.SetStateAction<Searched[]>>;
 }
 
 export const SearchContext = createContext<SearchContextType>({
@@ -22,7 +15,11 @@ export const SearchContext = createContext<SearchContextType>({
   setSearchedList: () => {},
 });
 
-export function SearchProvider({ children }: { children: ReactNode }) {
+interface SearchProviderProps {
+  children: React.ReactNode;
+}
+
+export function SearchProvider({ children }: SearchProviderProps) {
   const [searchedList, setSearchedList] = useState<Searched[]>([]);
 
   const searchContextValue = useMemo(
