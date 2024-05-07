@@ -1,13 +1,15 @@
 import { useContext } from "react";
 import styled from "@emotion/styled";
 import { SearchContext } from "@/context";
+import { getCurrentDate } from "@/utils";
 import SearchedItem from "./SearchedItem";
 
 interface SearchedList {
   isFocus: boolean;
+  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SearchedList({ isFocus }: SearchedList) {
+export default function SearchedList({ isFocus, setIsFocus }: SearchedList) {
   const { searchedList, setSearchedList } = useContext(SearchContext);
 
   const handleDeleteAllClick = (event: React.MouseEvent) => {
@@ -31,6 +33,18 @@ export default function SearchedList({ isFocus }: SearchedList) {
     setSearchedList(removedList);
   };
 
+  const handleSelectClick = (clickedKeyword: string) => {
+    const removedList = searchedList.filter(
+      ({ keyword }) => keyword !== clickedKeyword
+    );
+
+    const date = getCurrentDate();
+
+    setSearchedList([{ keyword: clickedKeyword, date }, ...removedList]);
+    (document.activeElement as HTMLElement).blur();
+    setIsFocus(false);
+  };
+
   return (
     <Container isDisplay={isFocus && searchedList.length > 0}>
       <ListHeader>
@@ -46,6 +60,7 @@ export default function SearchedList({ isFocus }: SearchedList) {
             keyword={keyword}
             date={date}
             onDeleteClick={handleDeleteClick}
+            onSelectClick={handleSelectClick}
           />
         ))}
       </List>

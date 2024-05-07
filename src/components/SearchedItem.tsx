@@ -5,17 +5,19 @@ interface SearchedItemProps {
   keyword: string;
   date: string;
   onDeleteClick: (event: React.MouseEvent, clickedKeyword: string) => void;
+  onSelectClick: (clickedKeyword: string) => void;
 }
 
 export default function SearchedItem({
   keyword,
   date,
   onDeleteClick,
+  onSelectClick,
 }: SearchedItemProps) {
   const { month, date: currentDate } = getMonthAndDate(date);
 
   return (
-    <Container>
+    <Container onClick={() => onSelectClick(keyword)}>
       <KeywordBox>{keyword}</KeywordBox>
       <DateAndButtonArea>
         <DateBox>{`${month}.${currentDate}`}</DateBox>

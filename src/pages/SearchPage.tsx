@@ -9,7 +9,7 @@ export default function SearchPage() {
     <Container>
       <Wrapper ref={elementRef}>
         <SearchBar setIsFocus={setIsFocus} />
-        <SearchedList isFocus={isFocus} />
+        <SearchedList isFocus={isFocus} setIsFocus={setIsFocus} />
       </Wrapper>
       <SearchResult />
     </Container>
