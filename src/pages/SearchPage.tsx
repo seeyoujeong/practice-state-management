@@ -7,10 +7,10 @@ export default function SearchPage() {
 
   return (
     <Container>
-      <div ref={elementRef}>
+      <Wrapper ref={elementRef}>
         <SearchBar setIsFocus={setIsFocus} />
         <SearchedList isFocus={isFocus} />
-      </div>
+      </Wrapper>
       <SearchResult />
     </Container>
   );
@@ -21,4 +21,8 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const Wrapper = styled.div`
+  position: relative;
 `;

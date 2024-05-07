@@ -56,10 +56,12 @@ export default function SearchedList({ isFocus }: SearchedList) {
 const Container = styled.div<{ isDisplay: boolean }>`
   width: 500px;
   display: ${({ isDisplay }) => (isDisplay ? "block" : "none")};
+  position: absolute;
   padding: 10px 0;
   box-sizing: border-box;
   border: 1px solid black;
   border-top: 0px;
+  background-color: white;
 `;
 
 const ListHeader = styled.div`
