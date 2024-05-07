@@ -29,6 +29,8 @@ export default function SearchBar({ setIsFocus }: SearchBarProps) {
       setSearchedList([{ keyword: currentKeyword, date }, ...searchedList]);
     }
 
+    (document.activeElement as HTMLElement).blur();
+    setIsFocus(false);
     setKeyword("");
   };
 
