@@ -1,4 +1,5 @@
 import { FormEventHandler, useContext, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import styled from "@emotion/styled";
 import { SearchContext } from "@/context";
 import { getCurrentDate } from "@/utils";
@@ -8,8 +9,9 @@ interface SearchBarProps {
 }
 
 export default function SearchBar({ setIsFocus }: SearchBarProps) {
-  const [keyword, setKeyword] = useState("");
   const { searchedList, setSearchedList } = useContext(SearchContext);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [keyword, setKeyword] = useState(searchParams.get("query") || "");
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -29,9 +31,10 @@ export default function SearchBar({ setIsFocus }: SearchBarProps) {
       setSearchedList([{ keyword: currentKeyword, date }, ...searchedList]);
     }
 
+    setSearchParams({ query: currentKeyword });
     (document.activeElement as HTMLElement).blur();
     setIsFocus(false);
-    setKeyword("");
+    setKeyword(currentKeyword);
   };
 
   return (

@@ -1,8 +1,7 @@
-import { useContext } from "react";
-import { SearchContext } from "@/context";
+import { useSearchParams } from "react-router-dom";
 
 export default function SearchResult() {
-  const { searchedList } = useContext(SearchContext);
+  const [searchParams] = useSearchParams();
 
-  return <>{searchedList[0]?.keyword || ""}</>;
+  return <>{searchParams.get("query") || ""}</>;
 }
