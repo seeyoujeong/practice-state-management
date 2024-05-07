@@ -8,6 +8,8 @@ export default function SearchPage() {
   const { keywordQuerystring, setKeywordQuerystring } = useKeywordQuerystring();
   const [keyword, setKeyword] = useState(keywordQuerystring);
 
+  console.log(isFocus, keyword, keywordQuerystring);
+
   return (
     <Container>
       <Wrapper ref={elementRef}>
@@ -34,6 +36,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 `;
 
 const Wrapper = styled.div`

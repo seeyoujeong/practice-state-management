@@ -84,4 +84,5 @@ const Button = styled.button`
   width: 50px;
   height: 100%;
   border: 0px;
+  cursor: pointer;
 `;
