@@ -1,18 +1,23 @@
 import { useContext } from "react";
 import styled from "@emotion/styled";
 import { SearchContext } from "@/context";
-import { useKeywordQuerystring } from "@/hooks";
 import { getCurrentDate } from "@/utils";
 import SearchedItem from "./SearchedItem";
 
-interface SearchedList {
+interface SearchedListProps {
   isFocus: boolean;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setKeywordQuerystring: (keyword: string) => void;
   setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SearchedList({ isFocus, setIsFocus }: SearchedList) {
+export default function SearchedList({
+  isFocus,
+  setKeyword,
+  setKeywordQuerystring,
+  setIsFocus,
+}: SearchedListProps) {
   const { searchedList, setSearchedList } = useContext(SearchContext);
-  const { setKeywordQuerystring } = useKeywordQuerystring();
 
   const handleDeleteAllClick = (event: React.MouseEvent) => {
     event.stopPropagation();
@@ -39,11 +44,12 @@ export default function SearchedList({ isFocus, setIsFocus }: SearchedList) {
     const removedList = searchedList.filter(
       ({ keyword }) => keyword !== clickedKeyword
     );
-
     const date = getCurrentDate();
 
     setSearchedList([{ keyword: clickedKeyword, date }, ...removedList]);
     setKeywordQuerystring(clickedKeyword);
+    setKeyword(clickedKeyword);
+
     (document.activeElement as HTMLElement).blur();
     setIsFocus(false);
   };

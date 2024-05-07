@@ -1,21 +1,22 @@
-import { FormEventHandler, useContext, useEffect, useState } from "react";
+import { FormEventHandler, useContext } from "react";
 import styled from "@emotion/styled";
 import { SearchContext } from "@/context";
-import { useKeywordQuerystring } from "@/hooks";
 import { getCurrentDate } from "@/utils";
 
 interface SearchBarProps {
+  keyword: string;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setKeywordQuerystring: (keyword: string) => void;
   setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SearchBar({ setIsFocus }: SearchBarProps) {
+export default function SearchBar({
+  keyword,
+  setKeyword,
+  setKeywordQuerystring,
+  setIsFocus,
+}: SearchBarProps) {
   const { searchedList, setSearchedList } = useContext(SearchContext);
-  const { keywordQuerystring, setKeywordQuerystring } = useKeywordQuerystring();
-  const [keyword, setKeyword] = useState(keywordQuerystring);
-
-  useEffect(() => {
-    setKeyword(keywordQuerystring);
-  }, [keywordQuerystring]);
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -36,9 +37,10 @@ export default function SearchBar({ setIsFocus }: SearchBarProps) {
     }
 
     setKeywordQuerystring(currentKeyword);
+    setKeyword(currentKeyword);
+
     (document.activeElement as HTMLElement).blur();
     setIsFocus(false);
-    setKeyword(currentKeyword);
   };
 
   return (
