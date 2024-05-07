@@ -1,7 +1,7 @@
-import { useSearchParams } from "react-router-dom";
+import { useKeywordQuerystring } from "@/hooks";
 
 export default function SearchResult() {
-  const [searchParams] = useSearchParams();
+  const { keywordQuerystring } = useKeywordQuerystring();
 
-  return <>{searchParams.get("query") || ""}</>;
+  return <>{keywordQuerystring}</>;
 }
