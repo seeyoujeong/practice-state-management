@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { SearchBar, SearchedList } from "@/components";
+import { SearchBar, SearchResult, SearchedList } from "@/components";
 import { useFocusState } from "@/hooks";
 
 export default function SearchPage() {
@@ -11,6 +11,7 @@ export default function SearchPage() {
         <SearchBar setIsFocus={setIsFocus} />
         <SearchedList isFocus={isFocus} />
       </div>
+      <SearchResult />
     </Container>
   );
 }
