@@ -19,7 +19,7 @@ export default function SearchedList({
 }: SearchedListProps) {
   const { searchedList, dispatch } = useContext(SearchContext);
 
-  const handleDeleteAllClick = (event: React.MouseEvent) => {
+  const handleResetClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     if (confirm("최근검색어를 모두 삭제하시겠습니까?")) {
@@ -55,9 +55,9 @@ export default function SearchedList({
         <>
           <ListHeader>
             <span>최근 검색어</span>
-            <DeleteAllButton onClick={(event) => handleDeleteAllClick(event)}>
+            <ResetButton onClick={(event) => handleResetClick(event)}>
               전체 삭제
-            </DeleteAllButton>
+            </ResetButton>
           </ListHeader>
           <List>
             {searchedList.map(({ keyword, date }) => (
@@ -97,7 +97,7 @@ const ListHeader = styled.div`
   font-size: 14px;
 `;
 
-const DeleteAllButton = styled.button`
+const ResetButton = styled.button`
   height: 20px;
   border: 0px;
   cursor: pointer;
