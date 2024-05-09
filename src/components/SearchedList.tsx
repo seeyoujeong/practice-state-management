@@ -55,24 +55,30 @@ export default function SearchedList({
   };
 
   return (
-    <Container isDisplay={isFocus && searchedList.length > 0}>
-      <ListHeader>
-        <span>최근 검색어</span>
-        <DeleteAllButton onClick={(event) => handleDeleteAllClick(event)}>
-          전체 삭제
-        </DeleteAllButton>
-      </ListHeader>
-      <List>
-        {searchedList.map(({ keyword, date }) => (
-          <SearchedItem
-            key={date}
-            keyword={keyword}
-            date={date}
-            onDeleteClick={handleDeleteClick}
-            onSelectClick={handleSelectClick}
-          />
-        ))}
-      </List>
+    <Container isDisplay={isFocus}>
+      {searchedList.length > 0 ? (
+        <>
+          <ListHeader>
+            <span>최근 검색어</span>
+            <DeleteAllButton onClick={(event) => handleDeleteAllClick(event)}>
+              전체 삭제
+            </DeleteAllButton>
+          </ListHeader>
+          <List>
+            {searchedList.map(({ keyword, date }) => (
+              <SearchedItem
+                key={date}
+                keyword={keyword}
+                date={date}
+                onDeleteClick={handleDeleteClick}
+                onSelectClick={handleSelectClick}
+              />
+            ))}
+          </List>
+        </>
+      ) : (
+        <NoSearched>최근 검색어 내역이 없습니다.</NoSearched>
+      )}
     </Container>
   );
 }
@@ -108,4 +114,11 @@ const List = styled.ul`
   padding: 0;
   display: flex;
   flex-direction: column;
+`;
+
+const NoSearched = styled.div`
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
