@@ -8,8 +8,6 @@ export default function SearchPage() {
   const { keywordQuerystring, setKeywordQuerystring } = useKeywordQuerystring();
   const [keyword, setKeyword] = useState(keywordQuerystring);
 
-  console.log(isFocus, keyword, keywordQuerystring);
-
   return (
     <Container>
       <Wrapper ref={elementRef}>
@@ -26,7 +24,7 @@ export default function SearchPage() {
           setIsFocus={setIsFocus}
         />
       </Wrapper>
-      <SearchResult />
+      <SearchResult keyword={keywordQuerystring} />
     </Container>
   );
 }

@@ -1,7 +1,7 @@
-import { useKeywordQuerystring } from "@/hooks";
+interface SearchResultProps {
+  keyword: string;
+}
 
-export default function SearchResult() {
-  const { keywordQuerystring } = useKeywordQuerystring();
-
-  return <>{keywordQuerystring}</>;
+export default function SearchResult({ keyword }: SearchResultProps) {
+  return <>{keyword}</>;
 }
