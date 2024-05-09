@@ -1,4 +1,4 @@
-import { createContext, useMemo, useState } from "react";
+import { createContext, useMemo, useReducer } from "react";
 
 export interface Searched {
   keyword: string;
@@ -7,12 +7,12 @@ export interface Searched {
 
 interface SearchContextType {
   searchedList: Searched[];
-  setSearchedList: React.Dispatch<React.SetStateAction<Searched[]>>;
+  dispatch: React.Dispatch<Action>;
 }
 
 export const SearchContext = createContext<SearchContextType>({
   searchedList: [],
-  setSearchedList: () => {},
+  dispatch: () => {},
 });
 
 interface SearchProviderProps {
@@ -20,14 +20,14 @@ interface SearchProviderProps {
 }
 
 export function SearchProvider({ children }: SearchProviderProps) {
-  const [searchedList, setSearchedList] = useState<Searched[]>([]);
+  const [searchedList, dispatch] = useReducer(searchReducer, []);
 
   const searchContextValue = useMemo(
     () => ({
       searchedList,
-      setSearchedList,
+      dispatch,
     }),
-    [searchedList, setSearchedList]
+    [searchedList, dispatch]
   );
 
   return (
@@ -35,4 +35,36 @@ export function SearchProvider({ children }: SearchProviderProps) {
       {children}
     </SearchContext.Provider>
   );
+}
+
+type Action =
+  | { type: "added"; keyword: string; date: string }
+  | { type: "deleted"; keyword: string }
+  | { type: "reset" };
+
+function searchReducer(state: Searched[], action: Action) {
+  switch (action.type) {
+    case "added": {
+      const { keyword, date } = action;
+
+      if (state.find(({ keyword: prevKeyword }) => prevKeyword === keyword)) {
+        const removedList = state.filter(
+          ({ keyword: prevKeyword }) => prevKeyword !== keyword
+        );
+
+        return [{ keyword, date }, ...removedList];
+      }
+
+      return [{ keyword, date }, ...state];
+    }
+    case "deleted": {
+      return state.filter(({ keyword }) => keyword !== action.keyword);
+    }
+    case "reset": {
+      return [];
+    }
+    default: {
+      throw Error(`Unknown action: ${action}`);
+    }
+  }
 }

@@ -17,13 +17,13 @@ export default function SearchedList({
   setKeywordQuerystring,
   setIsFocus,
 }: SearchedListProps) {
-  const { searchedList, setSearchedList } = useContext(SearchContext);
+  const { searchedList, dispatch } = useContext(SearchContext);
 
   const handleDeleteAllClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     if (confirm("최근검색어를 모두 삭제하시겠습니까?")) {
-      setSearchedList([]);
+      dispatch({ type: "reset" });
     }
   };
 
@@ -33,20 +33,15 @@ export default function SearchedList({
   ) => {
     event.stopPropagation();
 
-    const removedList = searchedList.filter(
-      ({ keyword }) => keyword !== clickedKeyword
-    );
-
-    setSearchedList(removedList);
+    dispatch({ type: "deleted", keyword: clickedKeyword });
   };
 
   const handleSelectClick = (clickedKeyword: string) => {
-    const removedList = searchedList.filter(
-      ({ keyword }) => keyword !== clickedKeyword
-    );
-    const date = getCurrentDate();
-
-    setSearchedList([{ keyword: clickedKeyword, date }, ...removedList]);
+    dispatch({
+      type: "added",
+      keyword: clickedKeyword,
+      date: getCurrentDate(),
+    });
     setKeywordQuerystring(clickedKeyword);
     setKeyword(clickedKeyword);
 

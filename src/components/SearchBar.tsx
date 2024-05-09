@@ -16,7 +16,7 @@ export default function SearchBar({
   setKeywordQuerystring,
   setIsFocus,
 }: SearchBarProps) {
-  const { searchedList, setSearchedList } = useContext(SearchContext);
+  const { dispatch } = useContext(SearchContext);
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
@@ -24,18 +24,11 @@ export default function SearchBar({
 
     if (currentKeyword.length === 0) return;
 
-    const date = getCurrentDate();
-
-    if (searchedList.find(({ keyword }) => keyword === currentKeyword)) {
-      const removedList = searchedList.filter(
-        ({ keyword }) => keyword !== currentKeyword
-      );
-
-      setSearchedList([{ keyword: currentKeyword, date }, ...removedList]);
-    } else {
-      setSearchedList([{ keyword: currentKeyword, date }, ...searchedList]);
-    }
-
+    dispatch({
+      type: "added",
+      keyword: currentKeyword,
+      date: getCurrentDate(),
+    });
     setKeywordQuerystring(currentKeyword);
     setKeyword(currentKeyword);
 
