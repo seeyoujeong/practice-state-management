@@ -4,17 +4,17 @@ import { SearchContext } from "@/context";
 import { getCurrentDate } from "@/utils";
 
 interface SearchBarProps {
-  keyword: string;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  setKeywordQuerystring: (keyword: string) => void;
+  searchKeyword: string;
+  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setSearchAndQuerystring: (keyword: string) => void;
   focusOn: () => void;
   focusOff: () => void;
 }
 
 export default function SearchBar({
-  keyword,
-  setKeyword,
-  setKeywordQuerystring,
+  searchKeyword,
+  setSearchKeyword,
+  setSearchAndQuerystring,
   focusOn,
   focusOff,
 }: SearchBarProps) {
@@ -22,7 +22,7 @@ export default function SearchBar({
 
   const handleSubmit: FormEventHandler = (event) => {
     event.preventDefault();
-    const currentKeyword = keyword.trim();
+    const currentKeyword = searchKeyword.trim();
 
     if (currentKeyword.length === 0) return;
 
@@ -31,9 +31,7 @@ export default function SearchBar({
       keyword: currentKeyword,
       date: getCurrentDate(),
     });
-    setKeywordQuerystring(currentKeyword);
-    setKeyword(currentKeyword);
-
+    setSearchAndQuerystring(currentKeyword);
     focusOff();
   };
 
@@ -42,8 +40,8 @@ export default function SearchBar({
       <Form onSubmit={handleSubmit}>
         <Input
           type="text"
-          onChange={(event) => setKeyword(event.target.value)}
-          value={keyword}
+          onChange={(event) => setSearchKeyword(event.target.value)}
+          value={searchKeyword}
           onFocus={() => focusOn()}
         />
         <Button>검색</Button>

@@ -1,7 +1,7 @@
 interface SearchResultProps {
-  keyword: string;
+  searchKeyword: string;
 }
 
-export default function SearchResult({ keyword }: SearchResultProps) {
-  return <>{keyword}</>;
+export default function SearchResult({ searchKeyword }: SearchResultProps) {
+  return <>{searchKeyword}</>;
 }

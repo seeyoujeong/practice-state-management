@@ -1,32 +1,30 @@
-import { useState } from "react";
 import styled from "@emotion/styled";
 import { SearchBar, SearchResult, SearchedList } from "@/components";
-import { useFocusState, useKeywordQuerystring } from "@/hooks";
+import { useFocusState, useSearch } from "@/hooks";
 
 export default function SearchPage() {
   const { elementRef, isFocus, focusOn, focusOff } =
     useFocusState<HTMLDivElement>();
-  const { keywordQuerystring, setKeywordQuerystring } = useKeywordQuerystring();
-  const [keyword, setKeyword] = useState(keywordQuerystring);
+  const { searchKeyword, setSearchKeyword, setSearchAndQuerystring } =
+    useSearch();
 
   return (
     <Container>
       <Wrapper ref={elementRef}>
         <SearchBar
-          keyword={keyword}
-          setKeyword={setKeyword}
-          setKeywordQuerystring={setKeywordQuerystring}
+          searchKeyword={searchKeyword}
+          setSearchKeyword={setSearchKeyword}
+          setSearchAndQuerystring={setSearchAndQuerystring}
           focusOn={focusOn}
           focusOff={focusOff}
         />
         <SearchedList
-          setKeyword={setKeyword}
-          setKeywordQuerystring={setKeywordQuerystring}
+          setSearchAndQuerystring={setSearchAndQuerystring}
           isFocus={isFocus}
           focusOff={focusOff}
         />
       </Wrapper>
-      <SearchResult keyword={keywordQuerystring} />
+      <SearchResult searchKeyword={searchKeyword} />
     </Container>
   );
 }

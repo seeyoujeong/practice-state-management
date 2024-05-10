@@ -6,15 +6,13 @@ import SearchedItem from "./SearchedItem";
 
 interface SearchedListProps {
   isFocus: boolean;
-  setKeyword: React.Dispatch<React.SetStateAction<string>>;
-  setKeywordQuerystring: (keyword: string) => void;
+  setSearchAndQuerystring: (keyword: string) => void;
   focusOff: () => void;
 }
 
 export default function SearchedList({
   isFocus,
-  setKeyword,
-  setKeywordQuerystring,
+  setSearchAndQuerystring,
   focusOff,
 }: SearchedListProps) {
   const { searchedList, dispatch } = useContext(SearchContext);
@@ -42,9 +40,7 @@ export default function SearchedList({
       keyword: clickedKeyword,
       date: getCurrentDate(),
     });
-    setKeywordQuerystring(clickedKeyword);
-    setKeyword(clickedKeyword);
-
+    setSearchAndQuerystring(clickedKeyword);
     focusOff();
   };
 
