@@ -4,7 +4,8 @@ import { SearchBar, SearchResult, SearchedList } from "@/components";
 import { useFocusState, useKeywordQuerystring } from "@/hooks";
 
 export default function SearchPage() {
-  const { elementRef, isFocus, setIsFocus } = useFocusState<HTMLDivElement>();
+  const { elementRef, isFocus, focusOn, focusOff } =
+    useFocusState<HTMLDivElement>();
   const { keywordQuerystring, setKeywordQuerystring } = useKeywordQuerystring();
   const [keyword, setKeyword] = useState(keywordQuerystring);
 
@@ -15,13 +16,14 @@ export default function SearchPage() {
           keyword={keyword}
           setKeyword={setKeyword}
           setKeywordQuerystring={setKeywordQuerystring}
-          setIsFocus={setIsFocus}
+          focusOn={focusOn}
+          focusOff={focusOff}
         />
         <SearchedList
           setKeyword={setKeyword}
           setKeywordQuerystring={setKeywordQuerystring}
           isFocus={isFocus}
-          setIsFocus={setIsFocus}
+          focusOff={focusOff}
         />
       </Wrapper>
       <SearchResult keyword={keywordQuerystring} />

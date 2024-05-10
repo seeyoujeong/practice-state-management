@@ -8,14 +8,14 @@ interface SearchedListProps {
   isFocus: boolean;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setKeywordQuerystring: (keyword: string) => void;
-  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  focusOff: () => void;
 }
 
 export default function SearchedList({
   isFocus,
   setKeyword,
   setKeywordQuerystring,
-  setIsFocus,
+  focusOff,
 }: SearchedListProps) {
   const { searchedList, dispatch } = useContext(SearchContext);
 
@@ -45,8 +45,7 @@ export default function SearchedList({
     setKeywordQuerystring(clickedKeyword);
     setKeyword(clickedKeyword);
 
-    (document.activeElement as HTMLElement).blur();
-    setIsFocus(false);
+    focusOff();
   };
 
   return (

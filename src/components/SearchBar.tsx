@@ -7,14 +7,16 @@ interface SearchBarProps {
   keyword: string;
   setKeyword: React.Dispatch<React.SetStateAction<string>>;
   setKeywordQuerystring: (keyword: string) => void;
-  setIsFocus: React.Dispatch<React.SetStateAction<boolean>>;
+  focusOn: () => void;
+  focusOff: () => void;
 }
 
 export default function SearchBar({
   keyword,
   setKeyword,
   setKeywordQuerystring,
-  setIsFocus,
+  focusOn,
+  focusOff,
 }: SearchBarProps) {
   const { dispatch } = useContext(SearchContext);
 
@@ -32,8 +34,7 @@ export default function SearchBar({
     setKeywordQuerystring(currentKeyword);
     setKeyword(currentKeyword);
 
-    (document.activeElement as HTMLElement).blur();
-    setIsFocus(false);
+    focusOff();
   };
 
   return (
@@ -43,7 +44,7 @@ export default function SearchBar({
           type="text"
           onChange={(event) => setKeyword(event.target.value)}
           value={keyword}
-          onFocus={() => setIsFocus(true)}
+          onFocus={() => focusOn()}
         />
         <Button>검색</Button>
       </Form>

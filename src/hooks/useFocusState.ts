@@ -1,8 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const useFocusState = <T extends HTMLElement>() => {
   const [isFocus, setIsFocus] = useState(false);
   const elementRef = useRef<T>(null);
+
+  const focusOn = useCallback(() => {
+    setIsFocus(true);
+  }, []);
+
+  const focusOff = useCallback(() => {
+    (document.activeElement as HTMLElement).blur();
+    setIsFocus(false);
+  }, []);
 
   useEffect(() => {
     const handleOutsideClick = (event: MouseEvent) => {
@@ -20,7 +29,10 @@ const useFocusState = <T extends HTMLElement>() => {
     };
   }, []);
 
-  return { elementRef, isFocus, setIsFocus };
+  return useMemo(
+    () => ({ elementRef, isFocus, focusOn, focusOff }),
+    [isFocus, focusOn, focusOff]
+  );
 };
 
 export default useFocusState;
