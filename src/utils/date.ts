@@ -14,3 +14,6 @@ export const getCurrentDate = () => {
 
   return currentDate;
 };
+
+export const isCurrentPathname = (pathname: string) =>
+  location.pathname === `/${pathname}`;

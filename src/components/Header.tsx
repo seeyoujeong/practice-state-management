@@ -1,16 +1,15 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
+import { isCurrentPathname } from "@/utils";
+
+const menuList = ["search"];
 
 function Header() {
   const navigate = useNavigate();
-  const location = useLocation();
-  const menuList = ["search", "shop"];
-  const isCurrentPathname = (pathname: string) =>
-    location.pathname === `/${pathname}`;
 
   return (
     <Container>
-      <Title onClick={() => navigate("/")}>Header</Title>
+      <Title onClick={() => navigate("/")}>Title</Title>
       <Menu>
         {menuList.map((name) => (
           <MenuItem
