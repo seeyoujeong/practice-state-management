@@ -9,7 +9,7 @@ function Header() {
 
   return (
     <Container>
-      <Title onClick={() => navigate("/")}>Title</Title>
+      <Title onClick={() => navigate("/")}>상태 관리 연습</Title>
       <Menu>
         {menuList.map((name) => (
           <MenuItem
@@ -42,6 +42,7 @@ const Title = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 0 10px;
   cursor: pointer;
 `;
 
