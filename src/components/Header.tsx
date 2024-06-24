@@ -2,7 +2,10 @@ import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import { isCurrentPathname } from "@/utils";
 
-const menuList = ["search"];
+const menuList = [
+  { path: "search", label: "검색" },
+  { path: "cart", label: "장바구니" },
+];
 
 function Header() {
   const navigate = useNavigate();
@@ -11,13 +14,13 @@ function Header() {
     <Container>
       <Title onClick={() => navigate("/")}>상태 관리 연습</Title>
       <Menu>
-        {menuList.map((name) => (
+        {menuList.map(({ path, label }) => (
           <MenuItem
-            key={name}
-            isCurrentPathname={isCurrentPathname(name)}
-            onClick={() => navigate(name)}
+            key={path}
+            isCurrentPathname={isCurrentPathname(path)}
+            onClick={() => navigate(path)}
           >
-            {name}
+            {label}
           </MenuItem>
         ))}
       </Menu>
@@ -60,6 +63,7 @@ const MenuItem = styled.li<{ isCurrentPathname: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 14px;
   color: ${(props) =>
     props.isCurrentPathname ? "rgba(0, 0, 0, 1)" : "rgba(0, 0, 0, 0.6)"};
   cursor: pointer;
