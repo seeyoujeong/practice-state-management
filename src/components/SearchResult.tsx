@@ -1,16 +1,16 @@
-import { useContext } from "react";
 import styled from "@emotion/styled";
-import { CartContext } from "@/context";
+
+import { useCartStore } from "@/stores";
 
 interface SearchResultProps {
   searchKeyword: string;
 }
 
 export default function SearchResult({ searchKeyword }: SearchResultProps) {
-  const { dispatch } = useContext(CartContext);
+  const addCartItem = useCartStore((state) => state.addCartItem);
 
   const handleAddToCart = (name: string) => {
-    dispatch({ type: "added", name });
+    addCartItem(name);
   };
 
   return (

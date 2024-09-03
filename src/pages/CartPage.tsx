@@ -1,13 +1,13 @@
-import { useContext } from "react";
 import styled from "@emotion/styled";
 import { CartList } from "@/components";
-import { CartContext } from "@/context";
+import { useCartStore } from "@/stores";
 
 export default function CartPage() {
-  const { cartItems, dispatch } = useContext(CartContext);
+  const cartItems = useCartStore((state) => state.cartItems);
+  const deleteCartItem = useCartStore((state) => state.deleteCartItem);
 
   const handleDeleteClick = (name: string) => {
-    dispatch({ type: "deleted", name });
+    deleteCartItem(name);
   };
 
   return (
