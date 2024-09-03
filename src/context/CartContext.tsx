@@ -1,6 +1,6 @@
 import { createContext, useMemo, useReducer } from "react";
 
-interface CartItem {
+export interface CartItem {
   name: string;
 }
 
@@ -16,8 +16,7 @@ export const CartContext = createContext<CartContextType>({
 
 type Action =
   | { type: "added"; name: string }
-  | { type: "deleted"; name: string }
-  | { type: "reset" };
+  | { type: "deleted"; name: string };
 
 function cartReducer(state: CartItem[], action: Action) {
   switch (action.type) {
@@ -34,9 +33,6 @@ function cartReducer(state: CartItem[], action: Action) {
       const { name } = action;
 
       return state.filter((prevState) => prevState.name !== name);
-    }
-    case "reset": {
-      return [];
     }
     default: {
       throw new Error(`Unkown action: ${action}`);
