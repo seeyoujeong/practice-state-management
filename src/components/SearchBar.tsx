@@ -1,6 +1,5 @@
-import { FormEventHandler, useContext } from "react";
 import styled from "@emotion/styled";
-import { SearchContext } from "@/context";
+import { useSearchStore } from "@/stores";
 import { getCurrentDate } from "@/utils";
 
 interface SearchBarProps {
@@ -18,19 +17,15 @@ export default function SearchBar({
   focusOn,
   focusOff,
 }: SearchBarProps) {
-  const { dispatch } = useContext(SearchContext);
+  const addKeyword = useSearchStore((state) => state.addKeyword);
 
-  const handleSubmit: FormEventHandler = (event) => {
+  const handleSubmit: React.FormEventHandler = (event) => {
     event.preventDefault();
     const currentKeyword = searchKeyword.trim();
 
     if (currentKeyword.length === 0) return;
 
-    dispatch({
-      type: "added",
-      keyword: currentKeyword,
-      date: getCurrentDate(),
-    });
+    addKeyword(currentKeyword, getCurrentDate());
     setSearchAndQuerystring(currentKeyword);
     focusOff();
   };

@@ -1,6 +1,5 @@
-import { useContext } from "react";
 import styled from "@emotion/styled";
-import { SearchContext } from "@/context";
+import { useSearchStore } from "@/stores";
 import { getCurrentDate } from "@/utils";
 import SearchedItem from "./SearchedItem";
 
@@ -15,13 +14,16 @@ export default function SearchedList({
   setSearchAndQuerystring,
   focusOff,
 }: SearchedListProps) {
-  const { searchedList, dispatch } = useContext(SearchContext);
+  const searchedList = useSearchStore((state) => state.searchedList);
+  const addKeyword = useSearchStore((state) => state.addKeyword);
+  const deleteKeyword = useSearchStore((state) => state.deleteKeyword);
+  const resetList = useSearchStore((state) => state.resetList);
 
   const handleResetClick = (event: React.MouseEvent) => {
     event.stopPropagation();
 
     if (confirm("최근검색어를 모두 삭제하시겠습니까?")) {
-      dispatch({ type: "reset" });
+      resetList();
     }
   };
 
@@ -31,15 +33,11 @@ export default function SearchedList({
   ) => {
     event.stopPropagation();
 
-    dispatch({ type: "deleted", keyword: clickedKeyword });
+    deleteKeyword(clickedKeyword);
   };
 
   const handleSelectClick = (clickedKeyword: string) => {
-    dispatch({
-      type: "added",
-      keyword: clickedKeyword,
-      date: getCurrentDate(),
-    });
+    addKeyword(clickedKeyword, getCurrentDate());
     setSearchAndQuerystring(clickedKeyword);
     focusOff();
   };
