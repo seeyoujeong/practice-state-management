@@ -15,14 +15,15 @@ export default function SearchResult({ searchKeyword }: SearchResultProps) {
 
   return (
     <ResultList>
-      {Array.from({ length: 5 }, (_, idx) => idx + 1).map((val, key) => (
-        <ResultItem
-          key={key}
-          onClick={() => handleAddToCart(searchKeyword + val)}
-        >
-          {searchKeyword + val}
-        </ResultItem>
-      ))}
+      {searchKeyword &&
+        Array.from({ length: 5 }, (_, idx) => idx + 1).map((val, key) => (
+          <ResultItem
+            key={key}
+            onClick={() => handleAddToCart(searchKeyword + val)}
+          >
+            {searchKeyword + val}
+          </ResultItem>
+        ))}
     </ResultList>
   );
 }
