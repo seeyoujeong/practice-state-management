@@ -1,17 +1,12 @@
 import { Outlet } from "react-router-dom";
 import styled from "@emotion/styled";
 import { Header } from "@/components";
-import { CartProvider, SearchProvider } from "@/context";
 
 function App() {
   return (
     <Container>
-      <SearchProvider>
-        <CartProvider>
-          <Header />
-          <Outlet />
-        </CartProvider>
-      </SearchProvider>
+      <Header />
+      <Outlet />
     </Container>
   );
 }
