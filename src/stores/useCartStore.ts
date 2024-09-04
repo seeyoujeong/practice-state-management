@@ -1,8 +1,5 @@
 import { create } from "zustand";
-
-export interface CartItem {
-  name: string;
-}
+import { CartItem } from "@/types";
 
 type State = {
   cartItems: CartItem[];

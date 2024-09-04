@@ -1,9 +1,5 @@
 import { create } from "zustand";
-
-interface Searched {
-  keyword: string;
-  date: string;
-}
+import { Searched } from "@/types";
 
 type State = {
   searchedList: Searched[];

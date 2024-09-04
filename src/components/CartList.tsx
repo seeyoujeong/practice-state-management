@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { CartItem } from "@/context";
+import { CartItem } from "@/types";
 
 interface CartListProps {
   cartItems: CartItem[];
