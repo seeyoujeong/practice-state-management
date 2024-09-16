@@ -4,7 +4,7 @@ import { getCurrentDate } from "@/utils";
 
 interface SearchBarProps {
   searchKeyword: string;
-  setSearchKeyword: React.Dispatch<React.SetStateAction<string>>;
+  setSearchKeyword: (keyword: string) => void;
   setSearchAndQuerystring: (keyword: string) => void;
   focusOn: () => void;
   focusOff: () => void;
