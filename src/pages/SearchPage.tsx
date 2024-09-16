@@ -1,12 +1,21 @@
 import styled from "@emotion/styled";
-import { SearchBar, SearchResult, SearchedList } from "@/components";
+import {
+  DeferredComponent,
+  SearchBar,
+  SearchResult,
+  SearchedList,
+} from "@/components";
 import { useFocusState, useSearch } from "@/hooks";
 
 export default function SearchPage() {
   const { elementRef, isFocus, focusOn, focusOff } =
     useFocusState<HTMLDivElement>();
-  const { searchKeyword, setSearchKeyword, setSearchAndQuerystring } =
-    useSearch();
+  const {
+    isPending,
+    searchKeyword,
+    setSearchKeyword,
+    setSearchAndQuerystring,
+  } = useSearch();
 
   return (
     <Container>
@@ -24,7 +33,13 @@ export default function SearchPage() {
           focusOff={focusOff}
         />
       </Wrapper>
-      <SearchResult searchKeyword={searchKeyword} />
+      {isPending ? (
+        <DeferredComponent>
+          <div>로딩 중</div>
+        </DeferredComponent>
+      ) : (
+        <SearchResult searchKeyword={searchKeyword} />
+      )}
     </Container>
   );
 }
