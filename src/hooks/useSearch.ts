@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState, useTransition } from "react";
 
 const KEYWORD = "keyword";
 
@@ -6,8 +6,15 @@ const useSearch = () => {
   const url = useMemo(() => new URL(location.href), []);
   const keywordQuerystring = url.searchParams.get(KEYWORD) || "";
   const [searchKeyword, setSearchKeyword] = useState(keywordQuerystring);
+  const [isPending, startTransition] = useTransition();
 
-  const setSearchAndQuerystring = useCallback(
+  const updateSearchKeyword = useCallback((text: string) => {
+    startTransition(() => {
+      setSearchKeyword(text);
+    });
+  }, []);
+
+  const updateSearchAndQuerystring = useCallback(
     (text: string) => {
       const { searchParams } = url;
 
@@ -16,18 +23,19 @@ const useSearch = () => {
         : searchParams.append(KEYWORD, text);
 
       history.pushState({}, "", url);
-      setSearchKeyword(text);
+      updateSearchKeyword(text);
     },
-    [url]
+    [url, updateSearchKeyword]
   );
 
   return useMemo(
     () => ({
       searchKeyword,
-      setSearchKeyword,
-      setSearchAndQuerystring,
+      setSearchKeyword: updateSearchKeyword,
+      setSearchAndQuerystring: updateSearchAndQuerystring,
+      isPending,
     }),
-    [searchKeyword, setSearchAndQuerystring]
+    [isPending, searchKeyword, updateSearchAndQuerystring, updateSearchKeyword]
   );
 };
 
